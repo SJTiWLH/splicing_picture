@@ -1,6 +1,6 @@
 import base64
 from PIL import Image
-from flask import  Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -8,9 +8,12 @@ app = Flask(__name__)
 def index(username):
     return "hello %s" % username
 
-@app.route('/splicing_picture/<base64_image_data>')
-def splicing_picture(base64_image_data):
+# @app.route('/splicing_picture, methods=['POST'], strict_slashes=False)
+@app.route('/splicing_picture', methods=['POST'])
+def splicing_picture():
+    base64_image_data = request.form.get('base64_image_data')
     # 选择保存的文件格式和文件名
+    # base64_image_data = im
     output_file_format = "png"  # 可以是 'png' 或 'jpg'
     output_file_name = f"output_image.{output_file_format}"
 
@@ -43,8 +46,16 @@ def splicing_picture(base64_image_data):
 
 app.run(host='0.0.0.0', port=5000)
 
-
-
 # with open(f"screenshot_row1_col1.png", "rb") as image_file:  # 转换为base64
 #     im = base64.b64encode(image_file.read()).decode()
 # print(im)
+# newim = splicing_picture(im)
+# print(newim)
+
+
+
+
+
+
+
+
